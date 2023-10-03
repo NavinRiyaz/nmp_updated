@@ -1,23 +1,6 @@
 "use strict";
+const Swal = require("Swal1")
 $(document).ready(function () {
-
-    //Success Toast Message
-    function showSuccessToast(message) {
-        const toast = $('#toast');
-        toast.removeClass('bg-danger');
-        toast.addClass('bg-success');
-        $('.toast-body').text(message);
-        toast.toast('show');
-    }
-
-    //Error Toast Message
-    function showErrorToast(message) {
-        const toast = $('#toast');
-        toast.removeClass('bg-success');
-        toast.addClass('bg-danger');
-        $('.toast-body').text(message);
-        toast.toast('show');
-    }
 
     $('#login_form').submit(function(e) {
         e.preventDefault();
@@ -33,17 +16,32 @@ $(document).ready(function () {
                 password: password
             },
             success: function(response) {
-                let data = JSON.parse(response);
-                if (data['status'] === '0'){
-                    showSuccessToast(data['message']);
-                    setTimeout(function(){
-                        window.location = data['url'];
-                    }, 2000);
-                } else {
-                    showErrorToast(data['message']);
+                try {
+                    let data = JSON.parse(response);
+                    if (data.status === '0'){
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: 'Login Successful!',
+                            timer: 1500,
+                            timerProgressBar: true
+                        }).then(function() {
+                            window.location = data.url;
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Login Failed!'
+                        });
+                    }
+                } catch (error) {
+                    console.error("Error parsing JSON response: " + error);
                 }
+            },
+            error: function(xhr, status, error) {
+                console.error("Ajax request failed with error: " + error);
             }
         });
     });
-
 });
