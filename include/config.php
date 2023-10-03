@@ -10,11 +10,11 @@ class Database {
     private $dbname = 'nmp_dr';
 
     //Production Environment
-//    private $host = '128.233.1.122';
-//    private $port = '5433';
-//    private $dbname = 'nmp_dr';
-//    private $username = 'postgres';
-//    private $password = 'postgres';
+//    private $host = 'LOL';
+//    private $port = 'LOL';
+//    private $dbname = 'LOL';
+//    private $username = 'LOL';
+//    private $password = 'LOL';
 
     private $conn;
 
